@@ -9,7 +9,7 @@
     "build": "tsc"
   },
   "keywords": [],
-  "author": "",
+  "author": "hamza elouham",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^4.3.1",
