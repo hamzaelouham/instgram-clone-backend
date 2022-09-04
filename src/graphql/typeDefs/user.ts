@@ -14,8 +14,7 @@ export const userQuery = extendType({
   type: "Query", // 2
   definition(t) {
     t.nonNull.list.field("getUser", {
-      // 3, 4, 5
-      type: "User", // 6, 7
+      type: "User",
       resolve: async () => {
         return await prisma.user.findMany();
       },

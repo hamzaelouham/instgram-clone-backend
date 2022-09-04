@@ -1,5 +1,8 @@
 import startApolloServer from "./app";
-import prisma from "../prisma/client";
+
+const port = process.env.PORT || 4000;
+
+startApolloServer(port);
 
 // const typeDefs = gql`
 //   type user {
@@ -20,5 +23,3 @@ import prisma from "../prisma/client";
 //     },
 //   },
 // };
-
-startApolloServer();
