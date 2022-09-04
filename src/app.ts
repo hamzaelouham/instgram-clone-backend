@@ -6,9 +6,10 @@ import {
 import express from "express";
 import http from "http";
 import cors from "cors";
+import { schema } from "./graphql/schema";
 
 //@ts-ignore
-async function startApolloServer(typeDefs, resolvers) {
+async function startApolloServer() {
   // Required logic for integrating with Express
   const app = express();
   app.use(cors());
@@ -20,8 +21,7 @@ async function startApolloServer(typeDefs, resolvers) {
   // Same ApolloServer initialization as before, plus the drain plugin
   // for our httpServer.
   const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema,
     csrfPrevention: true,
     cache: "bounded",
     plugins: [
