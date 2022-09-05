@@ -3,6 +3,7 @@ import express from "express";
 import http from "http";
 import cors from "cors";
 import { schema } from "./graphql/schema";
+import prisma from "../prisma/client";
 import {
   ApolloServerPluginDrainHttpServer,
   ApolloServerPluginLandingPageLocalDefault,
@@ -17,6 +18,11 @@ async function startApolloServer(port) {
 
   const server = new ApolloServer({
     schema,
+    context: ({ req, res }) => ({
+      req,
+      res,
+      db: prisma,
+    }),
     csrfPrevention: true,
     cache: "bounded",
     plugins: [

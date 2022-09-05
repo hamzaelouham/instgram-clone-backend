@@ -1,5 +1,4 @@
-import { objectType, extendType } from "nexus";
-import prisma from "../../../prisma/client";
+import { objectType, extendType, idArg, nonNull } from "nexus";
 
 export const user = objectType({
   name: "User", // <- Name of your type
@@ -11,13 +10,26 @@ export const user = objectType({
 });
 
 export const userQuery = extendType({
-  type: "Query", // 2
+  type: "Query",
   definition(t) {
     t.nonNull.list.field("getUser", {
       type: "User",
-      resolve: async () => {
-        return await prisma.user.findMany();
+      resolve: async (_, __, ctx) => {
+        return await ctx.db.user.findMany();
       },
-    });
+    }),
+      t.nonNull.list.field("getUserById", {
+        type: "User",
+        args: {
+          id: nonNull(idArg()),
+        },
+        resolve: async (_, args, ctx) => {
+          console.log(args.id);
+
+          return await ctx.db.user.findUnique({
+            where: {},
+          });
+        },
+      });
   },
 });
