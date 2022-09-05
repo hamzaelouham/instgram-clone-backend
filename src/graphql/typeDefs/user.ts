@@ -24,10 +24,10 @@ export const userQuery = extendType({
           id: nonNull(idArg()),
         },
         resolve: async (_, args, ctx) => {
-          console.log(args.id);
-
           return await ctx.db.user.findUnique({
-            where: {},
+            where: {
+              id: args.id,
+            },
           });
         },
       });
