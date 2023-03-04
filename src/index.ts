@@ -1,4 +1,4 @@
-import startApolloServer from "./app";
+import { startApolloServer } from "./app";
 
 const port = process.env.PORT || 4000;
 
