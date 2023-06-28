@@ -14,6 +14,11 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  RegisterInput: { // input type
+    email?: string | null; // String
+    name?: string | null; // String
+    password?: string | null; // String
+  }
 }
 
 export interface NexusGenEnums {
@@ -28,11 +33,16 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Mutation: {};
   Query: {};
   User: { // root type
+    createdAt: string; // String!
     email?: string | null; // String
-    id?: number | null; // Int
+    iamge?: string | null; // String
+    id?: string | null; // String
     name?: string | null; // String
+    password?: string | null; // String
+    updatedAt: string; // String!
   }
 }
 
@@ -47,30 +57,49 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  Mutation: { // field return type
+    register: NexusGenRootTypes['User']; // User!
+  }
   Query: { // field return type
-    getUser: Array<NexusGenRootTypes['User'] | null>; // [User]!
-    getUserById: Array<NexusGenRootTypes['User'] | null>; // [User]!
+    getUserById: NexusGenRootTypes['User']; // User!
+    getUsers: Array<NexusGenRootTypes['User'] | null>; // [User]!
   }
   User: { // field return type
+    createdAt: string; // String!
     email: string | null; // String
-    id: number | null; // Int
+    iamge: string | null; // String
+    id: string | null; // String
     name: string | null; // String
+    password: string | null; // String
+    updatedAt: string; // String!
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  Mutation: { // field return type name
+    register: 'User'
+  }
   Query: { // field return type name
-    getUser: 'User'
     getUserById: 'User'
+    getUsers: 'User'
   }
   User: { // field return type name
+    createdAt: 'String'
     email: 'String'
-    id: 'Int'
+    iamge: 'String'
+    id: 'String'
     name: 'String'
+    password: 'String'
+    updatedAt: 'String'
   }
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    register: { // args
+      data?: NexusGenInputs['RegisterInput'] | null; // RegisterInput
+    }
+  }
   Query: {
     getUserById: { // args
       id: string; // ID!
@@ -86,7 +115,7 @@ export interface NexusGenTypeInterfaces {
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = keyof NexusGenInputs;
 
 export type NexusGenEnumNames = never;
 

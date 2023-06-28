@@ -2,13 +2,27 @@
 ### Do not make changes to this file directly
 
 
+type Mutation {
+  register(data: RegisterInput): User!
+}
+
 type Query {
-  getUser: [User]!
-  getUserById(id: ID!): [User]!
+  getUserById(id: ID!): User!
+  getUsers: [User]!
+}
+
+input RegisterInput {
+  email: String
+  name: String
+  password: String
 }
 
 type User {
+  createdAt: String!
   email: String
-  id: Int
+  iamge: String
+  id: String
   name: String
+  password: String
+  updatedAt: String!
 }
