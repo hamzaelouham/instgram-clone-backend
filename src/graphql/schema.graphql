@@ -6,6 +6,13 @@ type AccessToken {
   accessToken: String
 }
 
+type Me {
+  email: String
+  iamge: String
+  name: String
+  userId: String
+}
+
 type Mutation {
   login(email: String!, password: String!): AccessToken!
   register(data: RegisterInput): User!
@@ -14,6 +21,7 @@ type Mutation {
 type Query {
   getUserById(id: ID!): User!
   getUsers: [User]!
+  me: Me
 }
 
 input RegisterInput {

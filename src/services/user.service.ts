@@ -1,7 +1,6 @@
 import { Compare, Hash, createToken } from "../utils";
 
-//@ts-ignore
-export const login = async (_, args: any, ctx: any) => {
+export const login = async (_: any, args: any, ctx: any) => {
   const user = await ctx.db.user.findUnique({
     where: { email: args.email },
   });
@@ -25,8 +24,7 @@ export const login = async (_, args: any, ctx: any) => {
   };
 };
 
-//@ts-ignore
-export const register = async (_, args: any, ctx: any) => {
+export const register = async (_: any, args: any, ctx: any) => {
   let user = await ctx.db.user.findUnique({
     where: { email: args.data.email },
   });

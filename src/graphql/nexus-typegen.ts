@@ -36,6 +36,12 @@ export interface NexusGenObjects {
   AccessToken: { // root type
     accessToken?: string | null; // String
   }
+  Me: { // root type
+    email?: string | null; // String
+    iamge?: string | null; // String
+    name?: string | null; // String
+    userId?: string | null; // String
+  }
   Mutation: {};
   Query: {};
   User: { // root type
@@ -63,6 +69,12 @@ export interface NexusGenFieldTypes {
   AccessToken: { // field return type
     accessToken: string | null; // String
   }
+  Me: { // field return type
+    email: string | null; // String
+    iamge: string | null; // String
+    name: string | null; // String
+    userId: string | null; // String
+  }
   Mutation: { // field return type
     login: NexusGenRootTypes['AccessToken']; // AccessToken!
     register: NexusGenRootTypes['User']; // User!
@@ -70,6 +82,7 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     getUserById: NexusGenRootTypes['User']; // User!
     getUsers: Array<NexusGenRootTypes['User'] | null>; // [User]!
+    me: NexusGenRootTypes['Me'] | null; // Me
   }
   User: { // field return type
     createdAt: string; // String!
@@ -86,6 +99,12 @@ export interface NexusGenFieldTypeNames {
   AccessToken: { // field return type name
     accessToken: 'String'
   }
+  Me: { // field return type name
+    email: 'String'
+    iamge: 'String'
+    name: 'String'
+    userId: 'String'
+  }
   Mutation: { // field return type name
     login: 'AccessToken'
     register: 'User'
@@ -93,6 +112,7 @@ export interface NexusGenFieldTypeNames {
   Query: { // field return type name
     getUserById: 'User'
     getUsers: 'User'
+    me: 'Me'
   }
   User: { // field return type name
     createdAt: 'String'

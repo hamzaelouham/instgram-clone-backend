@@ -23,17 +23,15 @@ export const permissions = shield({
 
 export function setAuthUser(req: Request, res: Response, next: NextFunction) {
   const authorization = req.headers["authorization"];
-  if (!authorization) {
-    throw new Error("not authenticated");
-  }
-  try {
-    const token = authorization.replace("Bearer", "").trim();
-    const payload = verifyToken<Payload>(token);
-    //@ts-ignore
-    req.user = payload;
-  } catch (err) {
-    console.log(err);
-    throw new Error("not authenticated");
+  if (authorization) {
+    try {
+      const token = authorization.replace("Bearer", "").trim();
+      const payload = verifyToken<Payload>(token);
+      //@ts-ignore
+      req.user = payload;
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return next();

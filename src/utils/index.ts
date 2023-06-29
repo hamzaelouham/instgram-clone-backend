@@ -3,6 +3,7 @@ import { sign, verify } from "jsonwebtoken";
 
 export interface Payload {
   userId: string;
+  name: string;
   email: string;
   image: string;
 }
