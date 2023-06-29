@@ -2,7 +2,12 @@
 ### Do not make changes to this file directly
 
 
+type AccessToken {
+  accessToken: String
+}
+
 type Mutation {
+  login(email: String!, password: String!): AccessToken!
   register(data: RegisterInput): User!
 }
 

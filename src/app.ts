@@ -1,9 +1,13 @@
 import { ApolloServer } from "apollo-server-express";
 import express from "express";
+import dotenv from "dotenv";
+//@ts-ignore
+import { applyMiddleware } from "graphql-middleware";
 import http from "http";
 import cors from "cors";
 import { schema } from "./graphql/schema";
 import prisma from "../prisma/client";
+import { permissions } from "./middleware";
 import {
   ApolloServerPluginDrainHttpServer,
   ApolloServerPluginLandingPageLocalDefault,
@@ -11,13 +15,14 @@ import {
 
 //@ts-ignore
 export async function startApolloServer(port) {
+  dotenv.config();
   const app = express();
   app.use(cors());
 
   const httpServer = http.createServer(app);
 
   const server = new ApolloServer({
-    schema,
+    schema: applyMiddleware(schema, permissions),
     context: ({ req, res }) => ({
       req,
       res,

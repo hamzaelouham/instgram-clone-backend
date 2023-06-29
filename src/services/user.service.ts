@@ -1,6 +1,30 @@
-import { Hash } from "../utils";
+import { Compare, Hash, createToken } from "../utils";
 
-export const login = (arg: any) => {};
+//@ts-ignore
+export const login = async (_, args: any, ctx: any) => {
+  const user = await ctx.db.user.findUnique({
+    where: { email: args.email },
+  });
+
+  if (!user) {
+    throw new Error("No such user found");
+  }
+
+  if (!Compare(args.password, user.password)) {
+    throw new Error("Invalid password");
+  }
+
+  const accessToken = createToken({
+    userId: user.id,
+    email: user.email,
+    image: user.image,
+  });
+
+  return {
+    accessToken,
+  };
+};
+
 //@ts-ignore
 export const register = async (_, args: any, ctx: any) => {
   let user = await ctx.db.user.findUnique({

@@ -1,5 +1,12 @@
-import { objectType, extendType, idArg, nonNull, inputObjectType } from "nexus";
-import { register } from "../../services/user.service";
+import { login, register } from "../../services/user.service";
+import {
+  objectType,
+  extendType,
+  idArg,
+  nonNull,
+  inputObjectType,
+  stringArg,
+} from "nexus";
 
 export const user = objectType({
   name: "User", // <- Name of your type
@@ -11,6 +18,13 @@ export const user = objectType({
     t.string("iamge");
     t.nonNull.string("createdAt");
     t.nonNull.string("updatedAt");
+  },
+});
+
+export const accessToken = objectType({
+  name: "AccessToken", // <- Name of your type
+  definition(t) {
+    t.string("accessToken"); // <- Field named `id` of type `Int`
   },
 });
 
@@ -57,6 +71,13 @@ export const userMutation = extendType({
       resolve: async (_, args: any, ctx: any) => {
         return await register(_, args, ctx);
       },
-    });
+    }),
+      t.nonNull.field("login", {
+        type: "AccessToken",
+        args: { email: nonNull(stringArg()), password: nonNull(stringArg()) },
+        resolve: async (_, args: any, ctx: any) => {
+          return await login(_, args, ctx);
+        },
+      });
   },
 });
