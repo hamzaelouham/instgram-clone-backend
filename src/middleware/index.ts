@@ -1,5 +1,6 @@
 import { rule, shield } from "graphql-shield";
-import { verifyToken } from "../utils";
+import { Payload, verifyToken } from "../utils";
+import { NextFunction, Request, Response } from "express";
 
 //@ts-ignore
 const isAuthenticated = rule()(async (parent, args, ctx, info) => {
@@ -8,9 +9,9 @@ const isAuthenticated = rule()(async (parent, args, ctx, info) => {
     return false;
   }
   const token = authorization.replace("Bearer", "").trim();
-  const payload = verifyToken(token);
-  //@ts-ignore
-  return !!payload.userId;
+  const payload = verifyToken<Payload>(token);
+
+  return !!payload?.userId;
 });
 
 export const permissions = shield({
@@ -19,3 +20,21 @@ export const permissions = shield({
   },
   Mutation: {},
 });
+
+export function setAuthUser(req: Request, res: Response, next: NextFunction) {
+  const authorization = req.headers["authorization"];
+  if (!authorization) {
+    throw new Error("not authenticated");
+  }
+  try {
+    const token = authorization.replace("Bearer", "").trim();
+    const payload = verifyToken<Payload>(token);
+    //@ts-ignore
+    req.user = payload;
+  } catch (err) {
+    console.log(err);
+    throw new Error("not authenticated");
+  }
+
+  return next();
+}

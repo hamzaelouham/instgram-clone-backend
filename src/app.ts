@@ -7,7 +7,7 @@ import http from "http";
 import cors from "cors";
 import { schema } from "./graphql/schema";
 import prisma from "../prisma/client";
-import { permissions } from "./middleware";
+import { permissions, setAuthUser } from "./middleware";
 import {
   ApolloServerPluginDrainHttpServer,
   ApolloServerPluginLandingPageLocalDefault,
@@ -17,7 +17,9 @@ import {
 export async function startApolloServer(port) {
   dotenv.config();
   const app = express();
+
   app.use(cors());
+  app.use(setAuthUser);
 
   const httpServer = http.createServer(app);
 

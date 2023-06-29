@@ -1,5 +1,11 @@
 import * as bcrypt from "bcrypt";
-import { JwtPayload, sign, verify } from "jsonwebtoken";
+import { sign, verify } from "jsonwebtoken";
+
+export interface Payload {
+  userId: string;
+  email: string;
+  image: string;
+}
 
 export const Hash = async (password: string, salt: number) => {
   return await bcrypt.hash(password, salt);
@@ -15,6 +21,11 @@ export function createToken(payload: string | Buffer | object) {
   });
 }
 
-export function verifyToken(token: string) {
-  return verify(token, process.env.JWT_SECRET!);
+export function verifyToken<T>(token: string): T | null {
+  try {
+    const data = verify(token, process.env.JWT_SECRET!) as T;
+    return data;
+  } catch (e) {
+    return null;
+  }
 }

@@ -8,8 +8,9 @@
     "start": "node dist/src/index.js",
     "dev": "nodemon src/index.ts",
     "build": "tsc",
-    "up": "docker compose up -d",
-    "down": "docker compose down"
+    "up": "docker compose up -d && yarn run dev",
+    "down": "docker compose down",
+    "migrate": "npx prisma migrate dev"
   },
   "keywords": [],
   "author": "hamza elouham",
