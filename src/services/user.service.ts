@@ -16,10 +16,13 @@ export const login = async (_: any, args: any, ctx: any) => {
   const accessToken = createToken({
     userId: user.id,
     email: user.email,
-    image: user.image,
   });
 
   return {
+    userId: user.id,
+    name: user.name,
+    email: user.email,
+    image: user.image,
     accessToken,
   };
 };

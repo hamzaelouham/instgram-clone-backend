@@ -21,9 +21,13 @@ export const user = objectType({
   },
 });
 
-export const accessToken = objectType({
-  name: "AccessToken", // <- Name of your type
+export const session = objectType({
+  name: "Session", // <- Name of your type
   definition(t) {
+    t.string("userId");
+    t.string("name"); // <- Field named `title` of type `String`
+    t.string("email"); // <- Field named `email` of type `String`
+    t.string("iamge");
     t.string("accessToken");
   },
 });
@@ -89,7 +93,7 @@ export const userMutation = extendType({
       },
     }),
       t.nonNull.field("login", {
-        type: "AccessToken",
+        type: "Session",
         args: { email: nonNull(stringArg()), password: nonNull(stringArg()) },
         resolve: async (_, args: any, ctx: any) => {
           return await login(_, args, ctx);

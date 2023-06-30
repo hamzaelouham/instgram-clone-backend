@@ -2,10 +2,6 @@
 ### Do not make changes to this file directly
 
 
-type AccessToken {
-  accessToken: String
-}
-
 type Me {
   email: String
   iamge: String
@@ -14,7 +10,7 @@ type Me {
 }
 
 type Mutation {
-  login(email: String!, password: String!): AccessToken!
+  login(email: String!, password: String!): Session!
   register(data: RegisterInput): User!
 }
 
@@ -28,6 +24,14 @@ input RegisterInput {
   email: String
   name: String
   password: String
+}
+
+type Session {
+  accessToken: String
+  email: String
+  iamge: String
+  name: String
+  userId: String
 }
 
 type User {
