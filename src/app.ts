@@ -24,7 +24,7 @@ export async function startApolloServer(port) {
   const httpServer = http.createServer(app);
 
   const server = new ApolloServer({
-    schema: applyMiddleware(schema, permissions),
+    schema: schema, //applyMiddleware(schema, permissions),
     context: ({ req, res }) => ({
       req,
       res,
