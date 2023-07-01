@@ -13,7 +13,7 @@ export const Hash = async (password: string, salt: number) => {
 };
 
 export const Compare = async (password: string, hashPassword: string) => {
-  return bcrypt.compare(password, hashPassword);
+  return await bcrypt.compare(password, hashPassword);
 };
 
 export function createToken(payload: string | Buffer | object) {

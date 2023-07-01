@@ -8,8 +8,8 @@ export const login = async (_: any, args: any, ctx: any) => {
   if (!user) {
     throw new Error("No such user found");
   }
-
-  if (!Compare(args.password, user.password)) {
+  const isValid = await Compare(args.password, user.password);
+  if (!isValid) {
     throw new Error("Invalid password");
   }
 
