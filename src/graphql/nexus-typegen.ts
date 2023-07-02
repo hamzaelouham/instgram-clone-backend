@@ -14,11 +14,6 @@ declare global {
 }
 
 export interface NexusGenInputs {
-  RegisterInput: { // input type
-    email?: string | null; // String
-    name?: string | null; // String
-    password?: string | null; // String
-  }
 }
 
 export interface NexusGenEnums {
@@ -35,6 +30,7 @@ export interface NexusGenScalars {
 export interface NexusGenObjects {
   Me: { // root type
     email?: string | null; // String
+    fullname?: string | null; // String
     iamge?: string | null; // String
     name?: string | null; // String
     userId?: string | null; // String
@@ -44,6 +40,7 @@ export interface NexusGenObjects {
   Session: { // root type
     accessToken?: string | null; // String
     email?: string | null; // String
+    fullname?: string | null; // String
     iamge?: string | null; // String
     name?: string | null; // String
     userId?: string | null; // String
@@ -51,6 +48,7 @@ export interface NexusGenObjects {
   User: { // root type
     createdAt: string; // String!
     email?: string | null; // String
+    fullname?: string | null; // String
     iamge?: string | null; // String
     id?: string | null; // String
     name?: string | null; // String
@@ -72,6 +70,7 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 export interface NexusGenFieldTypes {
   Me: { // field return type
     email: string | null; // String
+    fullname: string | null; // String
     iamge: string | null; // String
     name: string | null; // String
     userId: string | null; // String
@@ -88,6 +87,7 @@ export interface NexusGenFieldTypes {
   Session: { // field return type
     accessToken: string | null; // String
     email: string | null; // String
+    fullname: string | null; // String
     iamge: string | null; // String
     name: string | null; // String
     userId: string | null; // String
@@ -95,6 +95,7 @@ export interface NexusGenFieldTypes {
   User: { // field return type
     createdAt: string; // String!
     email: string | null; // String
+    fullname: string | null; // String
     iamge: string | null; // String
     id: string | null; // String
     name: string | null; // String
@@ -106,6 +107,7 @@ export interface NexusGenFieldTypes {
 export interface NexusGenFieldTypeNames {
   Me: { // field return type name
     email: 'String'
+    fullname: 'String'
     iamge: 'String'
     name: 'String'
     userId: 'String'
@@ -122,6 +124,7 @@ export interface NexusGenFieldTypeNames {
   Session: { // field return type name
     accessToken: 'String'
     email: 'String'
+    fullname: 'String'
     iamge: 'String'
     name: 'String'
     userId: 'String'
@@ -129,6 +132,7 @@ export interface NexusGenFieldTypeNames {
   User: { // field return type name
     createdAt: 'String'
     email: 'String'
+    fullname: 'String'
     iamge: 'String'
     id: 'String'
     name: 'String'
@@ -144,7 +148,10 @@ export interface NexusGenArgTypes {
       password: string; // String!
     }
     register: { // args
-      data?: NexusGenInputs['RegisterInput'] | null; // RegisterInput
+      email: string; // String!
+      fullname?: string | null; // String
+      name?: string | null; // String
+      password: string; // String!
     }
   }
   Query: {
@@ -162,7 +169,7 @@ export interface NexusGenTypeInterfaces {
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = keyof NexusGenInputs;
+export type NexusGenInputNames = never;
 
 export type NexusGenEnumNames = never;
 

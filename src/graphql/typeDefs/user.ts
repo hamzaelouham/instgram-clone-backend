@@ -12,7 +12,8 @@ export const user = objectType({
   name: "User", // <- Name of your type
   definition(t) {
     t.string("id");
-    t.string("name"); // <- Field named `title` of type `String`
+    t.string("name");
+    t.string("fullname"); // <- Field named `title` of type `String`
     t.string("email"); // <- Field named `email` of type `String`
     t.string("password");
     t.string("iamge");
@@ -25,7 +26,8 @@ export const session = objectType({
   name: "Session", // <- Name of your type
   definition(t) {
     t.string("userId");
-    t.string("name"); // <- Field named `title` of type `String`
+    t.string("name");
+    t.string("fullname"); // <- Field named `title` of type `String`
     t.string("email"); // <- Field named `email` of type `String`
     t.string("iamge");
     t.string("accessToken");
@@ -36,7 +38,8 @@ export const me = objectType({
   name: "Me", // <- Name of your type
   definition(t) {
     t.string("userId");
-    t.string("name"); // <- Field named `title` of type `String`
+    t.string("name");
+    t.string("fullname"); // <- Field named `title` of type `String`
     t.string("email"); // <- Field named `email` of type `String`
     t.string("iamge");
   },
@@ -73,21 +76,18 @@ export const userQuery = extendType({
   },
 });
 
-export const RegisterInput = inputObjectType({
-  name: "RegisterInput",
-  definition(t) {
-    t.string("name"); // <- Field named `title` of type `String`
-    t.string("email"); // <- Field named `email` of type `String`
-    t.string("password");
-  },
-});
-
 export const userMutation = extendType({
   type: "Mutation",
   definition(t) {
     t.nonNull.field("register", {
       type: "User",
-      args: { data: RegisterInput },
+
+      args: {
+        email: nonNull(stringArg()),
+        password: nonNull(stringArg()),
+        fullname: stringArg(),
+        name: stringArg(),
+      },
       resolve: async (_, args: any, ctx: any) => {
         return await register(_, args, ctx);
       },

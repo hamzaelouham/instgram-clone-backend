@@ -27,9 +27,13 @@ export const login = async (_: any, args: any, ctx: any) => {
   };
 };
 
-export const register = async (_: any, args: any, ctx: any) => {
+export const register = async (
+  _: any,
+  { email, password, fullname, name }: any,
+  ctx: any
+) => {
   let user = await ctx.db.user.findUnique({
-    where: { email: args.data.email },
+    where: { email },
   });
 
   if (user) {
@@ -38,10 +42,10 @@ export const register = async (_: any, args: any, ctx: any) => {
 
   user = await ctx.db.user.create({
     data: {
-      email: args.data.email,
-      name: args.data.name,
-      password: await Hash(args.data.password, 10),
-      image: args.data.image,
+      email: email,
+      name: name,
+      fullname: fullname,
+      password: await Hash(password, 10),
     },
   });
 
