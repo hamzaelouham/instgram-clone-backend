@@ -4,9 +4,23 @@
  */
 
 
-
-
-
+import type { core } from "nexus"
+declare global {
+  interface NexusGenCustomInputMethods<TypeName extends string> {
+    /**
+     * A custom scalar type representing a date and time.
+     */
+    date<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "DateTime";
+  }
+}
+declare global {
+  interface NexusGenCustomOutputMethods<TypeName extends string> {
+    /**
+     * A custom scalar type representing a date and time.
+     */
+    date<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "DateTime";
+  }
+}
 
 
 declare global {
@@ -25,9 +39,16 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
+  DateTime: any
 }
 
 export interface NexusGenObjects {
+  Comment: { // root type
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id?: string | null; // String
+    text?: string | null; // String
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+  }
   Me: { // root type
     email?: string | null; // String
     fullname?: string | null; // String
@@ -36,6 +57,14 @@ export interface NexusGenObjects {
     userId?: string | null; // String
   }
   Mutation: {};
+  Post: { // root type
+    caption?: string | null; // String
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id?: string | null; // String
+    imageUrl?: string | null; // String
+    likesCount?: number | null; // Int
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+  }
   Query: {};
   Session: { // root type
     accessToken?: string | null; // String
@@ -46,14 +75,14 @@ export interface NexusGenObjects {
     userId?: string | null; // String
   }
   User: { // root type
-    createdAt: string; // String!
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     email?: string | null; // String
     fullname?: string | null; // String
     iamge?: string | null; // String
     id?: string | null; // String
     name?: string | null; // String
     password?: string | null; // String
-    updatedAt: string; // String!
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
   }
 }
 
@@ -68,6 +97,14 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  Comment: { // field return type
+    author: NexusGenRootTypes['User'] | null; // User
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    id: string | null; // String
+    post: NexusGenRootTypes['Post'] | null; // Post
+    text: string | null; // String
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+  }
   Me: { // field return type
     email: string | null; // String
     fullname: string | null; // String
@@ -78,6 +115,16 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     login: NexusGenRootTypes['Session']; // Session!
     register: NexusGenRootTypes['User']; // User!
+  }
+  Post: { // field return type
+    author: NexusGenRootTypes['User'] | null; // User
+    caption: string | null; // String
+    comments: Array<NexusGenRootTypes['Comment'] | null> | null; // [Comment]
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    id: string | null; // String
+    imageUrl: string | null; // String
+    likesCount: number | null; // Int
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
   Query: { // field return type
     getUserById: NexusGenRootTypes['User']; // User!
@@ -93,18 +140,29 @@ export interface NexusGenFieldTypes {
     userId: string | null; // String
   }
   User: { // field return type
-    createdAt: string; // String!
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     email: string | null; // String
+    followers: Array<NexusGenRootTypes['User'] | null> | null; // [User]
+    following: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     fullname: string | null; // String
     iamge: string | null; // String
     id: string | null; // String
     name: string | null; // String
     password: string | null; // String
-    updatedAt: string; // String!
+    posts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  Comment: { // field return type name
+    author: 'User'
+    createdAt: 'DateTime'
+    id: 'String'
+    post: 'Post'
+    text: 'String'
+    updatedAt: 'DateTime'
+  }
   Me: { // field return type name
     email: 'String'
     fullname: 'String'
@@ -115,6 +173,16 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     login: 'Session'
     register: 'User'
+  }
+  Post: { // field return type name
+    author: 'User'
+    caption: 'String'
+    comments: 'Comment'
+    createdAt: 'DateTime'
+    id: 'String'
+    imageUrl: 'String'
+    likesCount: 'Int'
+    updatedAt: 'DateTime'
   }
   Query: { // field return type name
     getUserById: 'User'
@@ -130,14 +198,17 @@ export interface NexusGenFieldTypeNames {
     userId: 'String'
   }
   User: { // field return type name
-    createdAt: 'String'
+    createdAt: 'DateTime'
     email: 'String'
+    followers: 'User'
+    following: 'User'
     fullname: 'String'
     iamge: 'String'
     id: 'String'
     name: 'String'
     password: 'String'
-    updatedAt: 'String'
+    posts: 'Post'
+    updatedAt: 'DateTime'
   }
 }
 

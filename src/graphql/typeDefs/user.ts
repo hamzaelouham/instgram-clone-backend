@@ -13,12 +13,47 @@ export const user = objectType({
   definition(t) {
     t.string("id");
     t.string("name");
-    t.string("fullname"); // <- Field named `title` of type `String`
-    t.string("email"); // <- Field named `email` of type `String`
+    t.string("fullname");
+    t.string("email");
     t.string("password");
     t.string("iamge");
-    t.nonNull.string("createdAt");
-    t.nonNull.string("updatedAt");
+    t.field("createdAt", {
+      type: "DateTime",
+    });
+    t.field("updatedAt", {
+      type: "DateTime",
+    });
+
+    t.list.field("posts", {
+      type: "Post",
+      resolve: (parent, _args, ctx) => {
+        return ctx.db.user
+          .findUnique({
+            where: { id: parent.id },
+          })
+          .posts();
+      },
+    });
+    t.list.field("followers", {
+      type: "User",
+      resolve: (parent, _args, ctx) => {
+        return ctx.db.user
+          .findUnique({
+            where: { id: parent.id },
+          })
+          .followers();
+      },
+    });
+    t.list.field("following", {
+      type: "User",
+      resolve: (parent, _args, ctx) => {
+        return ctx.db.user
+          .findUnique({
+            where: { id: parent.id },
+          })
+          .following();
+      },
+    });
   },
 });
 

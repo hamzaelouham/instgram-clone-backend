@@ -2,6 +2,18 @@
 ### Do not make changes to this file directly
 
 
+type Comment {
+  author: User
+  createdAt: DateTime
+  id: String
+  post: Post
+  text: String
+  updatedAt: DateTime
+}
+
+"""A custom scalar type representing a date and time."""
+scalar DateTime
+
 type Me {
   email: String
   fullname: String
@@ -13,6 +25,17 @@ type Me {
 type Mutation {
   login(email: String!, password: String!): Session!
   register(email: String!, fullname: String, name: String, password: String!): User!
+}
+
+type Post {
+  author: User
+  caption: String
+  comments: [Comment]
+  createdAt: DateTime
+  id: String
+  imageUrl: String
+  likesCount: Int
+  updatedAt: DateTime
 }
 
 type Query {
@@ -31,12 +54,15 @@ type Session {
 }
 
 type User {
-  createdAt: String!
+  createdAt: DateTime
   email: String
+  followers: [User]
+  following: [User]
   fullname: String
   iamge: String
   id: String
   name: String
   password: String
-  updatedAt: String!
+  posts: [Post]
+  updatedAt: DateTime
 }
