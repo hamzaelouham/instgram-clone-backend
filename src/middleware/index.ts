@@ -1,6 +1,7 @@
 import { rule, shield } from "graphql-shield";
-import { Payload, verifyToken } from "../utils";
+import { verifyToken } from "../utils";
 import { NextFunction, Request, Response } from "express";
+import { Payload } from "../utils/types";
 
 //@ts-ignore
 const isAuthenticated = rule()(async (parent, args, ctx, info) => {

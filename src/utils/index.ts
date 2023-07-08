@@ -1,13 +1,6 @@
 import * as bcrypt from "bcrypt";
 import { sign, verify } from "jsonwebtoken";
 
-export interface Payload {
-  userId: string;
-  name: string;
-  email: string;
-  image: string;
-}
-
 export const Hash = async (password: string, salt: number) => {
   return await bcrypt.hash(password, salt);
 };

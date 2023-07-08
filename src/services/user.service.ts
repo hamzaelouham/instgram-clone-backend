@@ -55,3 +55,7 @@ export const register = async (
 
   return user;
 };
+
+class User {}
+
+export default new User();

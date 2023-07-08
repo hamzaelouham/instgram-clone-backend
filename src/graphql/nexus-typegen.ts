@@ -113,6 +113,7 @@ export interface NexusGenFieldTypes {
     userId: string | null; // String
   }
   Mutation: { // field return type
+    createPost: NexusGenRootTypes['Post'] | null; // Post
     login: NexusGenRootTypes['Session']; // Session!
     register: NexusGenRootTypes['User']; // User!
   }
@@ -127,6 +128,8 @@ export interface NexusGenFieldTypes {
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
   Query: { // field return type
+    getAllPosts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
+    getPost: NexusGenRootTypes['Post'] | null; // Post
     getUserById: NexusGenRootTypes['User']; // User!
     getUsers: Array<NexusGenRootTypes['User'] | null>; // [User]!
     me: NexusGenRootTypes['Me'] | null; // Me
@@ -171,6 +174,7 @@ export interface NexusGenFieldTypeNames {
     userId: 'String'
   }
   Mutation: { // field return type name
+    createPost: 'Post'
     login: 'Session'
     register: 'User'
   }
@@ -185,6 +189,8 @@ export interface NexusGenFieldTypeNames {
     updatedAt: 'DateTime'
   }
   Query: { // field return type name
+    getAllPosts: 'Post'
+    getPost: 'Post'
     getUserById: 'User'
     getUsers: 'User'
     me: 'Me'
@@ -214,6 +220,10 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createPost: { // args
+      caption?: string | null; // String
+      imageUrl: string; // String!
+    }
     login: { // args
       email: string; // String!
       password: string; // String!
@@ -226,6 +236,9 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    getPost: { // args
+      id: string; // ID!
+    }
     getUserById: { // args
       id: string; // ID!
     }
