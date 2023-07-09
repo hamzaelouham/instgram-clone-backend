@@ -18,11 +18,15 @@ class Post {
     return post;
   }
   async deletePost(id: string, ctx: context) {
-    const postToDelete = await ctx.db.post.findUnique({ where: { id } });
-    if (postToDelete?.authorId === ctx.req?.user?.userId) {
-      return await ctx.db.post.delete({ where: { id: postToDelete?.id } });
+    try {
+      const postToDelete = await ctx.db.post.findUnique({ where: { id } });
+      if (postToDelete?.authorId === ctx.req?.user?.userId) {
+        return await ctx.db.post.delete({ where: { id: postToDelete?.id } });
+      }
+      return null;
+    } catch (error) {
+      return null;
     }
-    return null;
   }
   async updatePost(_: any, args: any, ctx: context) {}
 
