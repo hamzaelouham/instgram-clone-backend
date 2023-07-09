@@ -42,8 +42,8 @@ type Post {
 type Query {
   getAllPosts: [Post]
   getPost(id: ID!): Post
-  getUserById(id: ID!): User!
-  getUsers: [User]!
+  getUserById(id: ID!): User
+  getUsers: [User]
   me: Me
 }
 

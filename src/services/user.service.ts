@@ -1,61 +1,20 @@
-import { Compare, Hash, createToken } from "../utils";
+import { NexusGenObjects } from "../graphql/nexus-typegen";
+import { context } from "../utils/types";
 
-export const login = async (_: any, args: any, ctx: any) => {
-  const user = await ctx.db.user.findUnique({
-    where: { email: args.email },
-  });
-
-  if (!user) {
-    throw new Error("No such user found");
+class User {
+  async getUsers(ctx: context): Promise<NexusGenObjects["User"][] | null> {
+    return await ctx.db.user.findMany();
   }
-  const isValid = await Compare(args.password, user.password);
-  if (!isValid) {
-    throw new Error("Invalid password");
+  async getUserById(
+    id: string,
+    ctx: context
+  ): Promise<NexusGenObjects["User"] | null> {
+    return await ctx.db.user.findUnique({
+      where: {
+        id,
+      },
+    });
   }
-
-  const accessToken = createToken({
-    userId: user.id,
-    email: user.email,
-  });
-
-  return {
-    userId: user.id,
-    name: user.name,
-    email: user.email,
-    image: user.image,
-    accessToken,
-  };
-};
-
-export const register = async (
-  _: any,
-  { email, password, fullname, name }: any,
-  ctx: any
-) => {
-  let user = await ctx.db.user.findUnique({
-    where: { email },
-  });
-
-  if (user) {
-    throw new Error("email must be unique !, email already taken!");
-  }
-
-  user = await ctx.db.user.create({
-    data: {
-      email: email,
-      name: name,
-      fullname: fullname,
-      password: await Hash(password, 10),
-    },
-  });
-
-  if (!user) {
-    throw new Error("ops!, you are not registerd !");
-  }
-
-  return user;
-};
-
-class User {}
+}
 
 export default new User();

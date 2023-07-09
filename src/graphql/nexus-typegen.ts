@@ -130,8 +130,8 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     getAllPosts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
     getPost: NexusGenRootTypes['Post'] | null; // Post
-    getUserById: NexusGenRootTypes['User']; // User!
-    getUsers: Array<NexusGenRootTypes['User'] | null>; // [User]!
+    getUserById: NexusGenRootTypes['User'] | null; // User
+    getUsers: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     me: NexusGenRootTypes['Me'] | null; // Me
   }
   Session: { // field return type

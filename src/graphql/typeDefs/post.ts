@@ -1,8 +1,8 @@
 import { extendType, idArg, nonNull, objectType, stringArg } from "nexus";
-import post from "../../services/post.service";
+import Post from "../../services/post.service";
 import { context } from "../../utils/types";
 
-export const Post = objectType({
+export const post = objectType({
   name: "Post",
   definition(t) {
     t.string("id");
@@ -49,7 +49,7 @@ export const postMutation = extendType({
         imageUrl: nonNull(stringArg()),
       },
       resolve: async (_, args: any, ctx: context) => {
-        return await post.createPost(_, args, ctx);
+        return await Post.createPost(_, args, ctx);
       },
     });
   },
@@ -64,14 +64,14 @@ export const postQuery = extendType({
         id: nonNull(idArg()),
       },
       resolve: async (_, args, ctx: context) => {
-        return await post.getPost(args.id, ctx);
+        return await Post.getPost(args.id, ctx);
       },
     }),
       t.list.field("getAllPosts", {
         type: "Post",
 
         resolve: async (_, __: any, ctx: context) => {
-          return await post.getAllPosts(ctx);
+          return await Post.getAllPosts(ctx);
         },
       });
   },

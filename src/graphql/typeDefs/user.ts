@@ -1,12 +1,7 @@
-import { login, register } from "../../services/user.service";
-import {
-  objectType,
-  extendType,
-  idArg,
-  nonNull,
-  inputObjectType,
-  stringArg,
-} from "nexus";
+import Auth from "../../services/auth.service";
+import User from "../../services/user.service";
+import { objectType, extendType, idArg, nonNull, stringArg } from "nexus";
+import { context } from "../../utils/types";
 
 export const user = objectType({
   name: "User", // <- Name of your type
@@ -26,12 +21,16 @@ export const user = objectType({
 
     t.list.field("posts", {
       type: "Post",
-      resolve: (parent, _args, ctx) => {
-        return ctx.db.user
+      resolve: async (parent, _args, ctx) => {
+        console.log("first");
+        const post = await ctx.db.user
+
           .findUnique({
             where: { id: parent.id },
           })
           .posts();
+        console.log("posts", post);
+        return post;
       },
     });
     t.list.field("followers", {
@@ -83,24 +82,16 @@ export const me = objectType({
 export const userQuery = extendType({
   type: "Query",
   definition(t) {
-    t.nonNull.list.field("getUsers", {
+    t.list.field("getUsers", {
       type: "User",
-      resolve: async (_, __, ctx) => {
-        return await ctx.db.user.findMany();
-      },
+      resolve: async (_, __, ctx) => await User.getUsers(ctx),
     }),
-      t.nonNull.field("getUserById", {
+      t.field("getUserById", {
         type: "User",
         args: {
           id: nonNull(idArg()),
         },
-        resolve: async (_, args, ctx) => {
-          return await ctx.db.user.findUnique({
-            where: {
-              id: args.id,
-            },
-          });
-        },
+        resolve: async (_, args, ctx) => await User.getUserById(args.id, ctx),
       }),
       t.field("me", {
         type: "Me",
@@ -123,15 +114,15 @@ export const userMutation = extendType({
         fullname: stringArg(),
         name: stringArg(),
       },
-      resolve: async (_, args: any, ctx: any) => {
-        return await register(_, args, ctx);
+      resolve: async (_, args: any, ctx: context) => {
+        return await Auth.register(args, ctx);
       },
     }),
       t.nonNull.field("login", {
         type: "Session",
         args: { email: nonNull(stringArg()), password: nonNull(stringArg()) },
-        resolve: async (_, args: any, ctx: any) => {
-          return await login(_, args, ctx);
+        resolve: async (_, args: any, ctx: context) => {
+          return await Auth.login(args, ctx);
         },
       });
   },
