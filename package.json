@@ -10,7 +10,8 @@
     "build": "tsc",
     "up": "docker compose up -d && yarn run dev",
     "down": "docker compose down",
-    "migrate": "npx prisma migrate dev"
+    "migrate": "npx prisma migrate dev",
+    "kill": "npx kill-port 4000"
   },
   "keywords": [],
   "author": "hamza elouham",

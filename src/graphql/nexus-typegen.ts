@@ -114,8 +114,11 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     createPost: NexusGenRootTypes['Post'] | null; // Post
+    deletePost: NexusGenRootTypes['Post'] | null; // Post
+    likePost: NexusGenRootTypes['Post'] | null; // Post
     login: NexusGenRootTypes['Session']; // Session!
     register: NexusGenRootTypes['User']; // User!
+    unlikePost: NexusGenRootTypes['Post'] | null; // Post
   }
   Post: { // field return type
     author: NexusGenRootTypes['User'] | null; // User
@@ -175,8 +178,11 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     createPost: 'Post'
+    deletePost: 'Post'
+    likePost: 'Post'
     login: 'Session'
     register: 'User'
+    unlikePost: 'Post'
   }
   Post: { // field return type name
     author: 'User'
@@ -224,6 +230,12 @@ export interface NexusGenArgTypes {
       caption?: string | null; // String
       imageUrl: string; // String!
     }
+    deletePost: { // args
+      id: string; // String!
+    }
+    likePost: { // args
+      id: string; // String!
+    }
     login: { // args
       email: string; // String!
       password: string; // String!
@@ -233,6 +245,9 @@ export interface NexusGenArgTypes {
       fullname?: string | null; // String
       name?: string | null; // String
       password: string; // String!
+    }
+    unlikePost: { // args
+      id: string; // String!
     }
   }
   Query: {

@@ -17,8 +17,13 @@ class Post {
 
     return post;
   }
-
-  async deletePost(_: any, args: any, ctx: context) {}
+  async deletePost(id: string, ctx: context) {
+    const postToDelete = await ctx.db.post.findUnique({ where: { id } });
+    if (postToDelete?.authorId === ctx.req?.user?.userId) {
+      return await ctx.db.post.delete({ where: { id: postToDelete?.id } });
+    }
+    return null;
+  }
   async updatePost(_: any, args: any, ctx: context) {}
 
   async getAllPosts(ctx: context) {
@@ -30,7 +35,6 @@ class Post {
 
     return posts;
   }
-
   async getPost(id: string, ctx: context) {
     const post = await ctx.db.post.findUnique({
       where: {
@@ -39,6 +43,19 @@ class Post {
     });
 
     return post;
+  }
+
+  async likePost(postId: string, ctx: context) {
+    return await ctx.db.post.update({
+      where: { id: postId },
+      data: { likesCount: { increment: 1 } },
+    });
+  }
+  async unLikePost(postId: string, ctx: context) {
+    return await ctx.db.post.update({
+      where: { id: postId },
+      data: { likesCount: { decrement: 1 } },
+    });
   }
 }
 

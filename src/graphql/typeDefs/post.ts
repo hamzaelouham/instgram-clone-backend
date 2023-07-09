@@ -51,7 +51,37 @@ export const postMutation = extendType({
       resolve: async (_, args: any, ctx: context) => {
         return await Post.createPost(_, args, ctx);
       },
-    });
+    }),
+      t.field("likePost", {
+        type: "Post",
+
+        args: {
+          id: nonNull(stringArg()),
+        },
+        resolve: async (_, args, ctx: context) => {
+          return await Post.likePost(args.id, ctx);
+        },
+      }),
+      t.field("unlikePost", {
+        type: "Post",
+
+        args: {
+          id: nonNull(stringArg()),
+        },
+        resolve: async (_, args, ctx: context) => {
+          return await Post.unLikePost(args.id, ctx);
+        },
+      }),
+      t.field("deletePost", {
+        type: "Post",
+
+        args: {
+          id: nonNull(stringArg()),
+        },
+        resolve: async (_, args, ctx: context) => {
+          return await Post.deletePost(args.id, ctx);
+        },
+      });
   },
 });
 

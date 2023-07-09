@@ -24,8 +24,11 @@ type Me {
 
 type Mutation {
   createPost(caption: String, imageUrl: String!): Post
+  deletePost(id: String!): Post
+  likePost(id: String!): Post
   login(email: String!, password: String!): Session!
   register(email: String!, fullname: String, name: String, password: String!): User!
+  unlikePost(id: String!): Post
 }
 
 type Post {

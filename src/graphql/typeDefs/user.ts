@@ -1,5 +1,6 @@
 import Auth from "../../services/auth.service";
 import User from "../../services/user.service";
+import Post from "../../services/post.service";
 import { objectType, extendType, idArg, nonNull, stringArg } from "nexus";
 import { context } from "../../utils/types";
 
@@ -21,17 +22,13 @@ export const user = objectType({
 
     t.list.field("posts", {
       type: "Post",
-      resolve: async (parent, _args, ctx) => {
-        console.log("first");
-        const post = await ctx.db.user
-
-          .findUnique({
-            where: { id: parent.id },
-          })
-          .posts();
-        console.log("posts", post);
-        return post;
-      },
+      resolve: async (parent, _args, ctx: context) =>
+        await Post.getAllPosts(ctx),
+      // return ctx.db.user
+      //   .findUnique({
+      //     where: { id: parent.id },
+      //   })
+      //   .posts();
     });
     t.list.field("followers", {
       type: "User",
