@@ -35,6 +35,9 @@ class Post {
       where: {
         authorId: ctx.req?.user?.userId,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     return posts;

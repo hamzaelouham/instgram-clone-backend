@@ -14,6 +14,27 @@ import { PrismaClient } from "@prisma/client";
 // if (process.env.NODE_ENV === "development") {
 //   global.prisma = prisma;
 // }
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
+
+const prisma = new PrismaClient({
+  log: [
+    { level: 'warn', emit: 'event' },
+    { level: 'info', emit: 'event' },
+    { level: 'error', emit: 'event' },
+  ],
+})
+
+prisma.$on('warn', (e) => {
+  console.log(e)
+})
+
+prisma.$on('info', (e) => {
+  console.log(e)
+})
+
+prisma.$on('error', (e) => {
+  console.log(e)
+})
+
 
 export default prisma;
