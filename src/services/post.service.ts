@@ -20,11 +20,13 @@ class Post {
   async deletePost(id: string, ctx: context) {
     try {
       const postToDelete = await ctx.db.post.findUnique({ where: { id } });
+
       if (postToDelete?.authorId === ctx.req?.user?.userId) {
         return await ctx.db.post.delete({ where: { id: postToDelete?.id } });
       }
       return null;
     } catch (error) {
+      console.log(error);
       return null;
     }
   }

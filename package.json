@@ -11,7 +11,11 @@
     "up": "docker compose up -d && yarn run dev",
     "down": "docker compose down",
     "migrate": "npx prisma migrate dev",
+    "seed": "npx prisma db seed",
     "kill": "npx kill-port 4000"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "keywords": [],
   "author": "hamza elouham",
@@ -20,7 +24,9 @@
     "@prisma/client": "^4.3.1",
     "apollo-server-core": "^3.10.2",
     "apollo-server-express": "^3.10.2",
+    "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
+    "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.1",
@@ -36,7 +42,7 @@
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "^18.7.14",
-    "nodemon": "^2.0.19",
+    "nodemon": "^3.0.1",
     "prisma": "^4.16.2",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.2"
