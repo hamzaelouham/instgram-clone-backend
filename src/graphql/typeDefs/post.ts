@@ -1,4 +1,11 @@
-import { extendType, idArg, nonNull, objectType, stringArg } from "nexus";
+import {
+  extendType,
+  idArg,
+  intArg,
+  nonNull,
+  objectType,
+  stringArg,
+} from "nexus";
 import Post from "../../services/post.service";
 import { context } from "../../utils/types";
 
@@ -103,6 +110,44 @@ export const postQuery = extendType({
         resolve: async (_, __: any, ctx: context) => {
           return await Post.getAllPosts(ctx);
         },
+      }),
+      t.field("posts", {
+        type: "Response",
+        args: {
+          first: intArg(),
+          after: stringArg(),
+        },
+        resolve: async (_, args, ctx: context) => {
+          return await Post.postsPagination(args, ctx);
+        },
       });
+  },
+});
+
+export const Edge = objectType({
+  name: "Edge",
+  definition(t) {
+    t.string("cursor");
+    t.field("node", {
+      type: post,
+    });
+  },
+});
+
+export const PageInfo = objectType({
+  name: "PageInfo",
+  definition(t) {
+    t.string("endCursor");
+    t.boolean("hasNextPage");
+  },
+});
+
+export const Response = objectType({
+  name: "Response",
+  definition(t) {
+    t.field("pageInfo", {
+      type: PageInfo,
+    });
+    t.list.field("edges", { type: Edge });
   },
 });

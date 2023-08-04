@@ -14,6 +14,11 @@ type Comment {
 """A custom scalar type representing a date and time."""
 scalar DateTime
 
+type Edge {
+  cursor: String
+  node: Post
+}
+
 type Me {
   email: String
   fullname: String
@@ -29,6 +34,11 @@ type Mutation {
   login(email: String!, password: String!): Session!
   register(email: String!, fullname: String, name: String, password: String!): User!
   unlikePost(id: String!): Post
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean
 }
 
 type Post {
@@ -48,6 +58,12 @@ type Query {
   getUserById(id: ID!): User
   getUsers: [User]
   me: Me
+  posts(after: String, first: Int): Response
+}
+
+type Response {
+  edges: [Edge]
+  pageInfo: PageInfo
 }
 
 type Session {

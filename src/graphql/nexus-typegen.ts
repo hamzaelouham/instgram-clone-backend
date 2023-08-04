@@ -49,6 +49,10 @@ export interface NexusGenObjects {
     text?: string | null; // String
     updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
   }
+  Edge: { // root type
+    cursor?: string | null; // String
+    node?: NexusGenRootTypes['Post'] | null; // Post
+  }
   Me: { // root type
     email?: string | null; // String
     fullname?: string | null; // String
@@ -57,6 +61,10 @@ export interface NexusGenObjects {
     userId?: string | null; // String
   }
   Mutation: {};
+  PageInfo: { // root type
+    endCursor?: string | null; // String
+    hasNextPage?: boolean | null; // Boolean
+  }
   Post: { // root type
     caption?: string | null; // String
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
@@ -66,6 +74,10 @@ export interface NexusGenObjects {
     updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
   }
   Query: {};
+  Response: { // root type
+    edges?: Array<NexusGenRootTypes['Edge'] | null> | null; // [Edge]
+    pageInfo?: NexusGenRootTypes['PageInfo'] | null; // PageInfo
+  }
   Session: { // root type
     accessToken?: string | null; // String
     email?: string | null; // String
@@ -105,6 +117,10 @@ export interface NexusGenFieldTypes {
     text: string | null; // String
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
+  Edge: { // field return type
+    cursor: string | null; // String
+    node: NexusGenRootTypes['Post'] | null; // Post
+  }
   Me: { // field return type
     email: string | null; // String
     fullname: string | null; // String
@@ -119,6 +135,10 @@ export interface NexusGenFieldTypes {
     login: NexusGenRootTypes['Session']; // Session!
     register: NexusGenRootTypes['User']; // User!
     unlikePost: NexusGenRootTypes['Post'] | null; // Post
+  }
+  PageInfo: { // field return type
+    endCursor: string | null; // String
+    hasNextPage: boolean | null; // Boolean
   }
   Post: { // field return type
     author: NexusGenRootTypes['User'] | null; // User
@@ -136,6 +156,11 @@ export interface NexusGenFieldTypes {
     getUserById: NexusGenRootTypes['User'] | null; // User
     getUsers: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     me: NexusGenRootTypes['Me'] | null; // Me
+    posts: NexusGenRootTypes['Response'] | null; // Response
+  }
+  Response: { // field return type
+    edges: Array<NexusGenRootTypes['Edge'] | null> | null; // [Edge]
+    pageInfo: NexusGenRootTypes['PageInfo'] | null; // PageInfo
   }
   Session: { // field return type
     accessToken: string | null; // String
@@ -169,6 +194,10 @@ export interface NexusGenFieldTypeNames {
     text: 'String'
     updatedAt: 'DateTime'
   }
+  Edge: { // field return type name
+    cursor: 'String'
+    node: 'Post'
+  }
   Me: { // field return type name
     email: 'String'
     fullname: 'String'
@@ -183,6 +212,10 @@ export interface NexusGenFieldTypeNames {
     login: 'Session'
     register: 'User'
     unlikePost: 'Post'
+  }
+  PageInfo: { // field return type name
+    endCursor: 'String'
+    hasNextPage: 'Boolean'
   }
   Post: { // field return type name
     author: 'User'
@@ -200,6 +233,11 @@ export interface NexusGenFieldTypeNames {
     getUserById: 'User'
     getUsers: 'User'
     me: 'Me'
+    posts: 'Response'
+  }
+  Response: { // field return type name
+    edges: 'Edge'
+    pageInfo: 'PageInfo'
   }
   Session: { // field return type name
     accessToken: 'String'
@@ -256,6 +294,10 @@ export interface NexusGenArgTypes {
     }
     getUserById: { // args
       id: string; // ID!
+    }
+    posts: { // args
+      after?: string | null; // String
+      first?: number | null; // Int
     }
   }
 }

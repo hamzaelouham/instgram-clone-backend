@@ -66,6 +66,55 @@ class Post {
       data: { likesCount: { decrement: 1 } },
     });
   }
+
+  async postsPagination(args: any, ctx: context) {
+    let queryResult = null;
+
+    if (args.after) {
+      queryResult = await ctx.db.post.findMany({
+        take: args.first,
+        skip: 1,
+        cursor: {
+          id: args.after,
+        },
+      });
+    } else {
+      queryResult = await ctx.db.post.findMany({
+        take: args.first,
+      });
+    }
+
+    if (queryResult.length > 0) {
+      const lastPostInResults = queryResult[queryResult.length - 1];
+      const cursor = lastPostInResults.id;
+      const secondQueryResult = await ctx.db.post.findMany({
+        take: args.first,
+        cursor: {
+          id: cursor,
+        },
+      });
+      const result = {
+        pageInfo: {
+          endCursor: cursor,
+          hasNextPage: secondQueryResult.length >= args.first,
+        },
+        edges: queryResult.map((post) => ({
+          cursor: post.id,
+          node: post,
+        })),
+      };
+
+      return result;
+    }
+
+    return {
+      pageInfo: {
+        endCursor: null,
+        hasNextPage: false,
+      },
+      edges: [],
+    };
+  }
 }
 
 export default new Post();
